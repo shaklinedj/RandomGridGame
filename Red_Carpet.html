@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Red Carpet Tu Camino a la Fama</title>
+<style>
+/****************
+DRAG CARD ON GRID
+*****************/
+
+
+#grid {
+  display: block;
+  margin: auto;
+  /*width: 1250px;*/
+  width: 1fr;
+  -webkit-user-select: none;
+  grid-auto-flow: dense;
+  /*font-size: 15px;*/
+}
+.item {
+  color: white;
+  display: inline-block;    
+  position: relative;
+  padding: 10px;
+  /*margin: 10px;*/
+  width: 220px;
+  height: 180px;
+  border-radius: 30px;
+  text-align: center;
+}
+.item:not(.clone) {
+  transition: 300ms ease all;
+}
+.item.dragging {
+  border: 2px dashed #ccc;
+  background: #fff;
+  color: #fff;
+}
+.item.clone {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+
+/***********
+FLIP CARD
+************/
+figure {
+  margin: 0;
+}  
+.tile-container {
+  width: 100%;
+  height: 100%;    
+  position: relative;
+  /*margin: 3em auto;  */
+  -webkit-perspective: 800px;
+  -moz-perspective: 800px;
+  -o-perspective: 800px;
+  perspective: 800px;
+}  
+.tile-container .tile {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: transform 0.6s;
+  /*transition: scale 5s, rotateY 1s;*/
+  
+
+  transform-style: preserve-3d;
+}
+.tile-container .tile .front,
+.tile-container .tile .back {     
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  text-align: center;
+}
+.tile-container .tile .contents 
+/* padding: 1em;*/
+
+.tile-container .tile a {
+  text-decoration: none;
+  display: block;
+  padding: 0 0 1em;
+}
+.tile-container .tile .front {
+  background: #be506400;
+}
+.tile-container .tile .back {
+  background: #56589600;
+  /*transform: rotateY(180deg);*/
+  transform: scale(0.8) rotateY(180deg);
+
+}
+.tile-container .flipped {
+  /*transform: rotateY(180deg);*/
+  transform: scale(1.2) rotateY(180deg);
+} 
+.front, .back {
+  border-radius:20px;
+  -webkit-box-shadow: 0px 5px 8px -3px rgba(74,74,74,0.32); 
+  box-shadow: 0px 5px 8px -3px rgba(74,74,74,0.32);
+}
+.contents, h1 {
+  color: #f8f8fc;
+  
+}
+.pp {
+  padding-top: 2px;
+  display: block;
+  width: 220px;
+  height: 180px;
+  margin: auto ;
+  border-radius: 30%;
+  background-color: rgba(255, 255, 255, 0);
+  border: solid #FFF; 
+}
+
+body{
+  background-image:url("Fondo.jpg");
+  background-repeat: no-repeat,no-repeat;
+  background-size: cover;
+}
+
+.centered {
+  position: absolute;
+  top: 35%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+}
+
+.boton_juego {
+	box-shadow:inset 0px 0px 15px 3px #23395e;
+	background:linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+	background-color:#2e466e;
+	border-radius:17px;
+	border:1px solid #1f2f47;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Georgia;
+	font-size:23px;
+	padding:13px 36px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+}
+.boton_juego:hover {
+	background:linear-gradient(to bottom, #415989 5%, #2e466e 100%);
+	background-color:#415989;
+}
+.boton_juego:active {
+	position:relative;
+	top:1px;
+}
+
+
+</style>
+
+</head>
+<body>
+  <!--aqui carga audio botones-->
+  <audio id="beep" preload="auto">
+    <source src="mario-bros-jump.mp3"></source>
+  </audio>
+ <!--<audio id="beep2" preload="auto">
+    <source src=""></source>
+  </audio>--> 
+
+<!-- partial:index.partial.html -->
+<div id="grid" style="align-items: center; margin: 0 0;">    
+
+      <div class="item card " id="card_1">
+        <div class="tile-container">
+          <div class="tile">            
+            <div class="front" onclick="get_random_image1()"> <img src="redcarpet.jpg" alt="" class="pp" > 
+              <div class="centered"><h1>1</h1> </div>
+              <div class="contents"  >     
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents">
+                <img id="image_shower1" class="pp"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item card" id="card_2" >
+        <div class="tile-container">      
+          <div class="tile">            
+            <div class="front" onclick="get_random_image2()">
+              <div class="centered"><h1>2</h1> </div>   
+              <div class="contents"> <img src="redcarpet.jpg" alt="" class="pp"> 
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower2" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>             
+      </div>
+      
+      <div class="item card" id="card_3">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image3()"> <img src="redcarpet.jpg" alt="" class="pp"> 
+              <div class="centered"><h1>3</h1> </div>  
+              <div class="contents" >   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents" > 
+                <img id="image_shower3" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+      <div class="item card" id="card_4">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image4()"> 
+              <div class="centered"><h1>4</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower4" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_5">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image5()"> 
+              <div class="centered"><h1>5</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower5" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_6">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front"  onclick="get_random_image6()"> 
+              <div class="centered"><h1>6</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower6" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_7">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front"  onclick="get_random_image7()"> 
+              <div class="centered"><h1>7</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower7" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_8">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front"  onclick="get_random_image8()"> 
+              <div class="centered"><h1>8</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower8" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_9">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front"  onclick="get_random_image9()"> 
+              <div class="centered"><h1>9</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower9" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_10">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image10()"> 
+              <div class="centered"><h1>10</h1> </div>  
+              <div class="contents"  > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower10" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_11">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image11()"> 
+              <div class="centered"><h1>11</h1> </div>  
+              <div class="contents"  > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower11" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_12">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front"  onclick="get_random_image12()"> 
+              <div class="centered"><h1>12</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower12" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_13">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image13()"> 
+              <div class="centered"><h1>13</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower13" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_14">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image14()"> 
+              <div class="centered"><h1>14</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower14" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_15">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front">
+              <div class="centered"><h1>15</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img src="carpet500-fijo.jpg" alt="" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_16">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image16()"> 
+              <div class="centered"><h1>16</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower16" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_17">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image17()"> 
+              <div class="centered"><h1>17</h1> </div>  
+              <div class="contents"  > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower17" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_18">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image18()"> 
+              <div class="centered"><h1>18</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower18" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_19">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image19()"> 
+              <div class="centered"><h1>19</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower19" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_20">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image20()"> 
+              <div class="centered"><h1>20</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower20" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_21">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image21()"> 
+              <div class="centered"><h1>21</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower21" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_22">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image22()"> 
+              <div class="centered"><h1>22</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower22" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_23">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image23()"> 
+              <div class="centered"><h1>23</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower23" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_24">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image24()"> 
+              <div class="centered"><h1>24</h1> </div>  
+              <div class="contents"> <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower24" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_25">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image25()"> 
+              <div class="centered"><h1>25</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower25" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_26">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image26()"> 
+              <div class="centered"><h1>26</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower26" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_27">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image27()"> 
+              <div class="centered"><h1>27</h1> </div>  
+              <div class="contents"  > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower27" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+      <div class="item card" id="card_28">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image28()"> 
+              <div class="centered"><h1>28</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower28" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+
+      <div class="item card" id="card_29">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" onclick="get_random_image29()"> 
+              <div class="centered"><h1>29</h1> </div>  
+              <div class="contents" > <img src="redcarpet.jpg" alt="" class="pp">   
+              </div>
+            </div>
+            
+            <div class="back"> 
+              <div class="contents"> 
+                <img id="image_shower29" class="pp"/>
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>
+
+
+
+
+<!--esta carta no lleva codigo de cambio automatico-->
+      <div class="item card" id="card_30">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front" id="front_30"> 
+              <div class="centered"><h1>30</h1> </div>
+              <div class="contents"> <img src="redcarpet.jpg" alt="" class="pp" > </div>
+            </div>
+             <div class="back" id="back_30"> 
+              <div class="contents"> <img src="carpet500-fijo.jpg" alt="" class="pp">
+              </div>
+            </div>            
+          </div>
+        </div>          
+      </div>  
+      
+      <div class="item card" id="reboot">
+        <div class="tile-container">        
+          <div class="tile">            
+            <div class="front"> 
+              <div class="centered"><h1></h1> </div>
+              <div class="contents"  onClick="window.location.reload();"> <img src="reiniciar.png" alt="" class="pp" > </div>
+            </div>
+          
+            </div>            
+          </div>
+        </div>          
+      </div>  
+
+
+</div>
+
+
+
+<!-- partial -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+
+<script>
+
+// Get all the images
+image_array = [
+  '80-1.jpg',
+  '80-2.jpg',
+  '80-3.jpg',
+  '80-4.jpg',
+  '80-5.jpg',
+  '80-6.jpg',
+  '80-7.jpg',
+  '80-8.jpg',
+  '90-1.jpg',
+  '90-2.jpg',
+  '90-3.jpg',
+  '90-4.jpg',
+  '90-5.jpg',
+  '90-6.jpg',
+  '90-7.jpg',
+  '90-8.jpg',
+  '90-9.jpg',
+  '100-1.jpg',
+  '100-2.jpg',
+  '100-3.jpg',
+  '100-4.jpg',
+  '100-5.jpg',
+  '100-6.jpg',
+  '150-1.jpg',
+  '150-2.jpg',
+  '150-3.jpg',
+  '200-1.jpg',
+  '200-2.jpg',
+]
+
+function get_random_image1(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower1').src = `./images/${selected_image}`
+ 
+}
+
+function get_random_image2(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower2').src = `./images/${selected_image}`
+ 
+}
+function get_random_image3(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower3').src = `./images/${selected_image}`
+ 
+}
+
+function get_random_image4(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower4').src = `./images/${selected_image}`
+ 
+}
+
+function get_random_image5(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower5').src = `./images/${selected_image}` 
+}
+
+function get_random_image6(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower6').src = `./images/${selected_image}` 
+}
+
+function get_random_image7(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower7').src = `./images/${selected_image}` 
+}
+
+function get_random_image8(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower8').src = `./images/${selected_image}` 
+}
+
+function get_random_image9(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower9').src = `./images/${selected_image}` 
+}
+
+function get_random_image10(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower10').src = `./images/${selected_image}` 
+}
+
+function get_random_image11(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower11').src = `./images/${selected_image}` 
+}
+
+function get_random_image12(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower12').src = `./images/${selected_image}` 
+}
+
+function get_random_image13(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower13').src = `./images/${selected_image}` 
+}
+
+function get_random_image14(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower14').src = `./images/${selected_image}` 
+}
+
+function get_random_image15(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower15').src = `./images/${selected_image}` 
+}
+
+function get_random_image16(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower16').src = `./images/${selected_image}` 
+}
+
+function get_random_image17(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower17').src = `./images/${selected_image}` 
+}
+
+function get_random_image18(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower18').src = `./images/${selected_image}` 
+}
+
+function get_random_image19(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower19').src = `./images/${selected_image}` 
+}
+
+function get_random_image20(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower20').src = `./images/${selected_image}` 
+}
+
+function get_random_image21(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower21').src = `./images/${selected_image}` 
+}
+
+function get_random_image22(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower22').src = `./images/${selected_image}` 
+}
+
+function get_random_image23(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower23').src = `./images/${selected_image}` 
+}
+
+function get_random_image24(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower24').src = `./images/${selected_image}` 
+}
+
+function get_random_image25(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower25').src = `./images/${selected_image}` 
+}
+
+function get_random_image26(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower26').src = `./images/${selected_image}` 
+}
+
+function get_random_image27(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower27').src = `./images/${selected_image}` 
+}
+
+function get_random_image28(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower28').src = `./images/${selected_image}` 
+}
+
+function get_random_image29(){
+  // Get a random index
+  random_index = Math.floor(Math.random() * image_array.length);
+
+  // Get an image at the random_index
+  selected_image = image_array[random_index]
+ 
+
+  // Display the image
+  document.getElementById('image_shower29').src = `./images/${selected_image}` 
+}
+
+
+/*******************************************
+ FLIP CARD ON CLICK
+*******************************************/
+
+$('.tile').click(function() {
+  $(this).toggleClass('flipped');
+});
+
+// Script para ejecutar audio en botones 
+//ejecuta audio en la class .card
+var beepOne = $("#beep")[0];
+$(".front")
+.click(function() {
+beepOne.play();
+});
+
+//ejecuta audio en el id especifico en este caso id=front_30 carta 30
+/*var beeptwo = $("#beep2")[0];
+$("#front_30")
+.click(function() {
+beeptwo.play();
+});*/
+
+
+</script>
+ 
+</body>
+</html>
